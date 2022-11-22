@@ -4,23 +4,27 @@ import { CalendarIcon } from '@heroicons/react/20/solid'
 import DatePicker from 'react-datepicker'
 import { useNavigate } from 'react-router-dom'
 
-const SearchForm = () => {
-  const [location, setLocation] = useState('Dhaka')
-  const [arrivalDate, setArrivalDate] = useState(new Date())
-  const [departureDate, setDepartureDate] = useState(
-    new Date(arrivalDate.getTime() + 24 * 60 * 60 * 1000)
-  )
 
+const SearchForm = () => {
+
+  const [location, setLocation] = useState()
+  const [arrival, setArrival] = useState(new Date())
+  const [departure, setDeparture] = useState(new Date(arrival.getTime() + 24 * 60 * 60 * 1000))
   const navigate = useNavigate()
-  const handleSubmit = event => {
-    event.preventDefault()
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
     const query = {
-      location: location,
-      from: arrivalDate,
-      to: departureDate,
+      location,
+      from: arrival,
+      to: departure
     }
     console.log(query)
-    // navigate('/search-result', { state: query })
+    navigate('search-result', { state: query })
+
+
   }
 
   return (
@@ -40,7 +44,8 @@ const SearchForm = () => {
           <input
             type='text'
             value={location}
-            onChange={event => setLocation(event.target.value)}
+            onChange={(e) => setLocation(e.target.value)}
+
             name='location'
             required
             placeholder='Add city, Landmark or address'
@@ -53,8 +58,9 @@ const SearchForm = () => {
             <div>
               <p className='block text-sm text-gray-500'>Arrival</p>
               <DatePicker
-                selected={arrivalDate}
-                onChange={date => setArrivalDate(date)}
+                selected={arrival}
+                onChange={(date) => setArrival(date)}
+
                 className='w-2/3'
               />
             </div>
@@ -65,8 +71,9 @@ const SearchForm = () => {
             <div>
               <p className='block text-sm text-gray-500'>Departure</p>
               <DatePicker
-                selected={departureDate}
-                onChange={date => setDepartureDate(date)}
+                selected={departure}
+                onChange={(date) => setDeparture(date)}
+
                 className='w-2/3'
               />
             </div>

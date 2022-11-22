@@ -26,10 +26,23 @@ const Home = () => {
       </div>
       <div className='flex-1'>
         <div className='flex'>
-          <HomeCard />
-          <HomeCard />
-          <HomeCard />
-          <HomeCard />
+        <div>
+          <div className='flex justify-between px-4'>
+            <p className='text-xl font-bold'>Homes</p>
+            <Link to={'/coming-soon'}  > See all</Link>
+
+          </div>
+
+           <div className='container pb-8 pt-2 mx-auto'>
+            <div className='flex flex-wrap'>
+              {
+                [...Array(3)].map((exp,index)=><HomeCard key={index} />)
+              }
+
+            </div>
+
+           </div>
+        </div>
 
         </div>
         <div>
