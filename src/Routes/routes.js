@@ -5,6 +5,7 @@ import Home from '../pages/Home'
 import Login from '../pages/Login/Login'
 import Signup from '../pages/Login/Signup'
 import Main from '../Layout/Main'
+import ComingSoon from '../pages/Shared/ComingSoon'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup />,
+      },
+      {
+        path: '/coming-soon',
+        element: <ComingSoon />,
       },
     ],
   },
