@@ -1,9 +1,100 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import toast from 'react-hot-toast'
 
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import PrimaryButton from '../../components/Button/PrimaryButton'
+import { AuthContext } from '../../contexts/AuthProvider'
+import SmallSpinner from '../../components/Spinner/SmallSpinner'
+
+
 
 const Signup = () => {
+
+  const { createUser, updateUserProfile, verifyEmail, loading, setLoading, signInWithGoogle } = useContext(AuthContext)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const name = e.target.name.value
+    const email = e.target.email.value
+    const password = e.target.password.value
+    const image = e.target.image.files[0]
+
+
+    const formData = new FormData()
+    formData.append('image', image);
+
+
+    // upload image 
+
+    const url = `https://api.imgbb.com/1/upload?key=3a23e3b03d072e5560b16694253bc0da`
+
+    fetch(url, {
+      method: 'POST',
+
+      body: formData
+
+
+    })
+      .then(res => res.json())
+      .then(imageData => {
+
+        //  create user 
+        createUser(email, password)
+          .then(result => {
+
+            console.log(name, imageData.data.display_url)
+            // update profile 
+            updateUserProfile(name, imageData.data.display_url)
+              .then(() => {
+                console.log('profile is updated')
+                console.log(result.user)
+
+                verifyEmail()
+                  .then(() => {
+                    toast.success('please check your mail for varification')
+                    navigate(from, { replace: true })
+
+
+                  })
+                  .catch((error) => {
+                    setLoading(false)
+                  })
+
+
+
+              })
+              .catch(err => console.log(err.message))
+
+          })
+          .catch(err => console.log(err.message))
+
+
+      })
+      .catch(err => console.log(err.message))
+
+
+
+  }
+
+
+
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle()
+      .then(result => {
+        console.log(result.user)
+        navigate(from, { replace: true })
+
+      })
+      .catch(error => console.log(error.message))
+
+  }
+
+
+
   return (
     <div className='flex justify-center items-center pt-8'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
@@ -11,7 +102,7 @@ const Signup = () => {
           <h1 className='my-3 text-4xl font-bold'>Signup</h1>
           <p className='text-sm text-gray-400'>Create a new account</p>
         </div>
-        <form
+        <form onSubmit={handleSubmit}
           noValidate=''
           action=''
           className='space-y-12 ng-untouched ng-pristine ng-valid'
@@ -79,7 +170,9 @@ const Signup = () => {
                 type='submit'
                 classes='w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100'
               >
-                Sign up
+                {
+                  loading ? <SmallSpinner /> : ' Sign up'
+                }
               </PrimaryButton>
             </div>
           </div>
@@ -92,7 +185,7 @@ const Signup = () => {
           <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
         </div>
         <div className='flex justify-center space-x-4'>
-          <button aria-label='Log in with Google' className='p-3 rounded-sm'>
+          <button onClick={handleSignInWithGoogle} aria-label='Log in with Google' className='p-3 rounded-sm'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 32 32'
