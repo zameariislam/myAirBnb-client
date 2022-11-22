@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import PrimaryButton from '../../components/Button/PrimaryButton'
 import { AuthContext } from '../../contexts/AuthProvider'
 import SmallSpinner from '../../components/Spinner/SmallSpinner'
+import { setAuthToken } from '../../api/auth'
 
 
 const Login = () => {
@@ -23,6 +24,7 @@ const Login = () => {
       .then(result => {
         toast.success('Login Successful.....!')
         // Get Token
+        setAuthToken(result.user)
         
         navigate(from, { replace: true })
       })
@@ -36,6 +38,9 @@ const Login = () => {
   const handleGoogleSignin = () => {
     signInWithGoogle().then(result => {
       console.log(result.user)
+      // get Token 
+
+      setAuthToken(result.user)
       
       navigate(from, { replace: true })
     })

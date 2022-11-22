@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import PrimaryButton from '../../components/Button/PrimaryButton'
 import { AuthContext } from '../../contexts/AuthProvider'
 import SmallSpinner from '../../components/Spinner/SmallSpinner'
+import { setAuthToken } from '../../api/auth'
 
 
 
@@ -46,7 +47,8 @@ const Signup = () => {
         createUser(email, password)
           .then(result => {
 
-            console.log(name, imageData.data.display_url)
+            // console.log(name, imageData.data.display_url)
+            setAuthToken(result.user)
             // update profile 
             updateUserProfile(name, imageData.data.display_url)
               .then(() => {
@@ -85,6 +87,7 @@ const Signup = () => {
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then(result => {
+        setAuthToken(result.user)
         console.log(result.user)
         navigate(from, { replace: true })
 
