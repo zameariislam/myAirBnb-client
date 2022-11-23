@@ -7,6 +7,8 @@ import HomeCard from '../components/Card/HomeCard'
 
 import { ArrowRightIcon, StarIcon } from '@heroicons/react/24/solid'
 import { AuthContext } from '../contexts/AuthProvider'
+import { saveBooking } from '../api/bookings'
+import toast from 'react-hot-toast'
 
 const Checkout = () => {
 
@@ -46,6 +48,15 @@ const Checkout = () => {
 
   const handleBooking = () => {
     console.log(booking)
+    saveBooking(booking)
+    .then(data=>{
+      toast.success('Booking Successfully completed')
+
+      
+      console.log(data)})
+    .catch(err=>{
+      toast.error('Booking is Failed')
+      console.log(err?.message)})
 
   }
 

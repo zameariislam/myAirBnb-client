@@ -10,6 +10,12 @@ import Details from '../pages/Details'
 import Checkout from '../pages/Checkout'
 import SearchResult from '../pages/SearchResult'
 import PrivateRoute from './PrivateRoute'
+import DashBoardLayout from '../Layout/DashBoardLayout'
+import Welcome from '../pages/Dashboard/Welcome'
+import Mybookings from '../components/Dashboard/Mybookings'
+import BecomeAHost from '../components/Dashboard/BecomeAHost'
+
+
 
 
 const router = createBrowserRouter([
@@ -49,7 +55,38 @@ const router = createBrowserRouter([
         path: 'search-result',
         element: <SearchResult />
       },
+
+
     ],
+  },
+
+
+  {
+    path: '/dashboard',
+    element: <PrivateRoute>
+      <DashBoardLayout />
+    </PrivateRoute>,
+    children: [
+
+      {
+        path: '',
+        element: <Welcome />
+
+      },
+      {
+        path: 'my-bookings',
+        element: <PrivateRoute>
+          <Mybookings />
+        </PrivateRoute>
+      },
+      {
+        path: 'become-host',
+        element: <PrivateRoute>
+          <BecomeAHost />
+        </PrivateRoute>
+      }
+
+    ]
   },
 ])
 
