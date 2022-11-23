@@ -7,15 +7,18 @@ import Spinner from '../components/Spinner/Spinner'
 const Home = () => {
 
   const [loading, setLoading] = useState(false)
+  
   const [allExp, setAllExp] = useState([])
 
 
   useEffect(() => {
+    setLoading(true)
     fetch('expdata.json')
       .then(res => res.json())
       .then(data => {
 
         setAllExp(data)
+        setLoading(false)
 
       })
   }, [])
