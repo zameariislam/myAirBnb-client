@@ -30,7 +30,8 @@ const Mybookings = () => {
 
 
     return (
-        loading ? <Spinner/> :
+        
+            loading ? <Spinner/> :
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
 
@@ -94,6 +95,8 @@ const Mybookings = () => {
 
                 </table>
             </div>
+        
+       
     );
 };
 
