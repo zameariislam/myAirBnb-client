@@ -12,8 +12,13 @@ import SearchResult from '../pages/SearchResult'
 import PrivateRoute from './PrivateRoute'
 import DashBoardLayout from '../Layout/DashBoardLayout'
 import Welcome from '../pages/Dashboard/Welcome'
-import Mybookings from '../components/Dashboard/Mybookings'
-import BecomeAHost from '../components/Dashboard/BecomeAHost'
+import Mybookings from '../pages/Dashboard/Mybookings'
+import BecomeAHost from '../pages/Dashboard/BecomeAHost'
+import AllUsers from '../pages/Dashboard/AllUsers'
+import AllBookings from '../pages/Dashboard/AllBookings'
+import AddHome from '../pages/Dashboard/AddHome'
+import ManageHome from '../pages/Dashboard/ManageHome'
+
 
 
 
@@ -76,15 +81,42 @@ const router = createBrowserRouter([
       {
         path: 'my-bookings',
         element: <PrivateRoute>
-          <Mybookings />
+          <Mybookings/>
+          
         </PrivateRoute>
       },
       {
         path: 'become-host',
         element: <PrivateRoute>
-          <BecomeAHost />
+         <BecomeAHost/>
         </PrivateRoute>
-      }
+      },
+      {
+        path: 'all-users',
+        element: <PrivateRoute>
+         <AllUsers/>
+        </PrivateRoute>
+      },
+      {
+        path: 'all-bookings',
+        element: <PrivateRoute>
+        <AllBookings/>
+        </PrivateRoute>
+      },
+      {
+        path: 'add-home',
+        element: <PrivateRoute>
+          <AddHome/>
+        
+        </PrivateRoute>
+      },
+      {
+        path: 'manage-home',
+        element: <PrivateRoute>
+         <ManageHome/>
+        
+        </PrivateRoute>
+      },
 
     ]
   },

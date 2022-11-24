@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { getAllBookingsByEmail } from '../../api/bookings';
 import { AuthContext } from '../../contexts/AuthProvider';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../../components/Spinner/Spinner';
 
 const Mybookings = () => {
 
@@ -19,7 +19,7 @@ const Mybookings = () => {
                 setMyBookings(data)
                 setLoading(false)
             })
-            .catch(err=> {
+            .catch(err => {
                 console.log(err.message)
                 setLoading(false)
             })
@@ -30,8 +30,8 @@ const Mybookings = () => {
 
 
     return (
-        
-            loading ? <Spinner/> :
+
+        loading ? <Spinner /> :
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
 
@@ -95,8 +95,8 @@ const Mybookings = () => {
 
                 </table>
             </div>
-        
-       
+
+
     );
 };
 
